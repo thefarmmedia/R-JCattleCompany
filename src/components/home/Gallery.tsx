@@ -1,0 +1,93 @@
+"use client";
+
+import { useState } from "react";
+import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
+import DemoBadge from "@/components/ui/DemoBadge";
+
+const CATEGORIES = ["All", "Cattle", "Trucks", "Trailers", "Farms", "Equipment"] as const;
+type Category = typeof CATEGORIES[number];
+
+interface GalleryItem {
+  id: number;
+  url: string;
+  title: string;
+  category: Exclude<Category, "All">;
+}
+
+const GALLERY: GalleryItem[] = [
+  { id: 1, url: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&q=75", title: "Cattle in Missouri", category: "Cattle" },
+  { id: 2, url: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=75", title: "Semi Truck on Rural Highway", category: "Trucks" },
+  { id: 3, url: "https://images.unsplash.com/photo-1500076656116-558758c991c1?w=600&q=75", title: "Missouri Farmland", category: "Farms" },
+  { id: 4, url: "https://images.unsplash.com/photo-1592878897099-851ff13e5a55?w=600&q=75", title: "Herd of Cattle", category: "Cattle" },
+  { id: 5, url: "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=600&q=75", title: "Livestock Trailer", category: "Trailers" },
+  { id: 6, url: "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=600&q=75", title: "Farm at Sunset", category: "Farms" },
+  { id: 7, url: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=75", title: "Farm Equipment", category: "Equipment" },
+  { id: 8, url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=75", title: "Agricultural Tractor", category: "Equipment" },
+  { id: 9, url: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=75", title: "Cattle Loading", category: "Cattle" },
+];
+
+export default function Gallery() {
+  const [active, setActive] = useState<Category>("All");
+  const [lightbox, setLightbox] = useState<number | null>(null);
+
+  const filtered = active === "All" ? GALLERY : GALLERY.filter((g) => g.category === active);
+  const lb = lightbox !== null ? filtered[lightbox] : null;
+
+  function prev() { setLightbox((i) => (i !== null ? (i - 1 + filtered.length) % filtered.length : 0)); }
+  function next() { setLightbox((i) => (i !== null ? (i + 1) % filtered.length : 0)); }
+
+  return (
+    <section id="gallery" className="bg-brand-dark-gray py-20 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-3">Gallery</p>
+          <h2 className="font-display font-bold text-white text-4xl sm:text-5xl mb-2">HAUL GALLERY</h2>
+          <DemoBadge label="PLACEHOLDER IMAGERY" className="mt-2" />
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {CATEGORIES.map((cat) => (
+            <button key={cat} onClick={() => setActive(cat)}
+              className={`px-5 py-2 rounded-full text-sm font-bold tracking-wide transition-all ${
+                active === cat ? "bg-brand-red text-white" : "bg-brand-charcoal border border-white/15 text-white/60 hover:border-white/40 hover:text-white"
+              }`}>
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
+          {filtered.map((item, i) => (
+            <div key={item.id}
+              className="relative aspect-[4/3] rounded-lg overflow-hidden cursor-pointer group border border-white/5 hover:border-brand-red/30 transition-all"
+              onClick={() => setLightbox(i)}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={item.url} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div className="absolute inset-0 bg-brand-black/0 group-hover:bg-brand-black/40 transition-colors flex items-center justify-center">
+                <ZoomIn size={32} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 translate-y-full group-hover:translate-y-0 transition-transform">
+                <p className="text-white text-xs font-bold">{item.title}</p>
+                <p className="text-white/50 text-[10px]">{item.category}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-center text-white/20 text-xs mt-6">Placeholder imagery shown. Real Pemberton Cattle Company photos will replace these.</p>
+      </div>
+
+      {lb && (
+        <div className="lightbox-overlay" onClick={() => setLightbox(null)} role="dialog" aria-modal="true" aria-label={lb.title}>
+          <button className="absolute top-4 right-4 text-white/60 hover:text-white z-10" onClick={() => setLightbox(null)} aria-label="Close"><X size={28} /></button>
+          <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Previous"><ChevronLeft size={36} /></button>
+          <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next"><ChevronRight size={36} /></button>
+          <div className="max-w-4xl max-h-[85vh] px-16" onClick={(e) => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={lb.url.replace("w=600", "w=1200")} alt={lb.title} className="max-w-full max-h-[80vh] object-contain rounded-lg" />
+            <p className="text-center text-white/70 text-sm mt-3">{lb.title}</p>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
