@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && cp ad3c95ac-08c0-4d3b-9dde-1fa4bc5b2516.png out/logo.png"
   publish = "out"
 
 [build.environment]
