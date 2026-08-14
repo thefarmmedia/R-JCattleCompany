@@ -1,7 +1,7 @@
 import { Phone, MessageSquare, Truck } from "lucide-react";
 import { BUSINESS, buildCallLink, buildSMSLink, buildSMSTemplate } from "@/config/business";
 
-const BG = "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=1600&q=80";
+const BG = "/3.jpg";
 
 export default function FinalCTA() {
   const callLink = buildCallLink(BUSINESS.phone);

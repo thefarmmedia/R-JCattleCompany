@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
-import DemoBadge from "@/components/ui/DemoBadge";
 
-const CATEGORIES = ["All", "Cattle", "Trucks", "Trailers", "Farms", "Equipment"] as const;
+const CATEGORIES = ["All", "Cattle", "Trucks", "Trailers", "Farms"] as const;
 type Category = typeof CATEGORIES[number];
 
 interface GalleryItem {
@@ -15,15 +14,12 @@ interface GalleryItem {
 }
 
 const GALLERY: GalleryItem[] = [
-  { id: 1, url: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=600&q=75", title: "Cattle in Missouri", category: "Cattle" },
-  { id: 2, url: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=75", title: "Semi Truck on Rural Highway", category: "Trucks" },
-  { id: 3, url: "https://images.unsplash.com/photo-1500076656116-558758c991c1?w=600&q=75", title: "Missouri Farmland", category: "Farms" },
-  { id: 4, url: "https://images.unsplash.com/photo-1592878897099-851ff13e5a55?w=600&q=75", title: "Herd of Cattle", category: "Cattle" },
-  { id: 5, url: "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=600&q=75", title: "Livestock Trailer", category: "Trailers" },
-  { id: 6, url: "https://images.unsplash.com/photo-1505682634904-d7c8d95cdc50?w=600&q=75", title: "Farm at Sunset", category: "Farms" },
-  { id: 7, url: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=75", title: "Farm Equipment", category: "Equipment" },
-  { id: 8, url: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&q=75", title: "Agricultural Tractor", category: "Equipment" },
-  { id: 9, url: "https://images.unsplash.com/photo-1560493676-04071c5f467b?w=600&q=75", title: "Cattle Loading", category: "Cattle" },
+  { id: 1, url: "/1.jpg", title: "Pemberton Cattle", category: "Cattle" },
+  { id: 2, url: "/2.jpg", title: "On the Road", category: "Trucks" },
+  { id: 3, url: "/3.jpg", title: "Livestock Haul", category: "Cattle" },
+  { id: 4, url: "/4.jpg", title: "Pemberton Trailer", category: "Trailers" },
+  { id: 5, url: "/5.jpg", title: "Missouri Farmland", category: "Farms" },
+  { id: 6, url: "/6.jpg", title: "Ready to Load", category: "Cattle" },
 ];
 
 export default function Gallery() {
@@ -42,7 +38,6 @@ export default function Gallery() {
         <div className="text-center mb-10">
           <p className="text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-3">Gallery</p>
           <h2 className="font-display font-bold text-white text-4xl sm:text-5xl mb-2">HAUL GALLERY</h2>
-          <DemoBadge label="PLACEHOLDER IMAGERY" className="mt-2" />
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -73,7 +68,6 @@ export default function Gallery() {
             </div>
           ))}
         </div>
-        <p className="text-center text-white/20 text-xs mt-6">Placeholder imagery shown. Real Pemberton Cattle Company photos will replace these.</p>
       </div>
 
       {lb && (
@@ -83,7 +77,7 @@ export default function Gallery() {
           <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Next"><ChevronRight size={36} /></button>
           <div className="max-w-4xl max-h-[85vh] px-16" onClick={(e) => e.stopPropagation()}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={lb.url.replace("w=600", "w=1200")} alt={lb.title} className="max-w-full max-h-[80vh] object-contain rounded-lg" />
+            <img src={lb.url} alt={lb.title} className="max-w-full max-h-[80vh] object-contain rounded-lg" />
             <p className="text-center text-white/70 text-sm mt-3">{lb.title}</p>
           </div>
         </div>

@@ -136,7 +136,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10 px-4 py-5">
+      <div className="border-t border-white/10 px-4 pt-5 pb-5 lg:pb-5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-brand-off-white/30">
           <p>
             © {new Date().getFullYear()} {BUSINESS.businessName} — {BUSINESS.city}, {BUSINESS.stateAbbr}. All rights reserved.
@@ -146,6 +146,8 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      {/* Spacer so mobile sticky bar doesn't cover footer content */}
+      <div className="h-20 lg:hidden" />
     </footer>
   );
 }

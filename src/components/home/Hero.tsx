@@ -5,9 +5,7 @@ import { ChevronDown, Phone, MessageSquare, Truck } from "lucide-react";
 import { BUSINESS, buildCallLink, buildSMSLink, buildSMSTemplate } from "@/config/business";
 import Button from "@/components/ui/Button";
 
-// Dramatic cattle/farm background using Unsplash
-const BG_IMAGE =
-  "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=1800&q=80";
+const BG_IMAGE = "/1.jpg";
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);

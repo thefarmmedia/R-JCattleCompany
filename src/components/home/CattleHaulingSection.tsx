@@ -1,7 +1,6 @@
 import CattleHaulForm from "@/components/forms/CattleHaulForm";
 
-const BG_CATTLE =
-  "https://images.unsplash.com/photo-1592878897099-851ff13e5a55?w=1400&q=80";
+const BG_CATTLE = "/2.jpg";
 
 export default function CattleHaulingSection() {
   return (
@@ -16,8 +15,8 @@ export default function CattleHaulingSection() {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-black/90 via-brand-black/60 to-brand-black/20" />
-        <div className="absolute inset-0 flex items-center px-6 lg:px-16 max-w-5xl">
-          <div>
+        <div className="absolute inset-0 flex items-center">
+          <div className="max-w-5xl mx-auto px-6 lg:px-16 w-full">
             <p className="text-brand-red text-xs font-bold tracking-[0.2em] uppercase mb-3">
               Primary Service
             </p>
